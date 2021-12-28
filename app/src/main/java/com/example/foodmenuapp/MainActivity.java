@@ -19,11 +19,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ArrayList<MenuModel> menuList=new ArrayList<>();
         menuList.add(new MenuModel(R.drawable.buger,"Burger","399","This is description"));
-        menuList.add(new MenuModel(R.drawable.buger,"Burger","399","This is description"));
-        menuList.add(new MenuModel(R.drawable.buger,"Burger","399","This is description"));
-        menuList.add(new MenuModel(R.drawable.buger,"Burger","399","This is description"));
-        menuList.add(new MenuModel(R.drawable.buger,"Burger","399","This is description"));
-        menuList.add(new MenuModel(R.drawable.buger,"Burger","399","This is description"));
+        menuList.add(new MenuModel(R.drawable.buger,"Piza","1299","This is description"));
+        menuList.add(new MenuModel(R.drawable.buger,"Chciken Roast","699","This is description"));
+        menuList.add(new MenuModel(R.drawable.buger,"Zinger","599","This is description"));
+        menuList.add(new MenuModel(R.drawable.buger,"Steam Roast","899","This is description"));
+        menuList.add(new MenuModel(R.drawable.buger,"Biryani","249","This is description"));
         //Setting Recycler View adatper
         RecyclerView recyclerView=findViewById(R.id.recylerView);
         MenuAdapter adapter=new MenuAdapter(menuList,this);
