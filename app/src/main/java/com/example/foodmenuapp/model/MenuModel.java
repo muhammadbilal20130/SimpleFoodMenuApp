@@ -1,6 +1,6 @@
 package com.example.foodmenuapp.model;
 
-public class MenuModel {
+public class MenuModel  {
     private int image;
     private String name,price,desciption;
 
