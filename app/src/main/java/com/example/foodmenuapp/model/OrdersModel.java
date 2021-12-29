@@ -11,6 +11,22 @@ public class OrdersModel {
         this.orderDishPrice = orderDishPrice;
     }
 
+    public void setImage(int image) {
+        Image = image;
+    }
+
+    public void setOrderDishName(String orderDishName) {
+        this.orderDishName = orderDishName;
+    }
+
+    public void setOrderDishID(String orderDishID) {
+        this.orderDishID = orderDishID;
+    }
+
+    public void setOrderDishPrice(String orderDishPrice) {
+        this.orderDishPrice = orderDishPrice;
+    }
+
     public int getImage() {
         return Image;
     }

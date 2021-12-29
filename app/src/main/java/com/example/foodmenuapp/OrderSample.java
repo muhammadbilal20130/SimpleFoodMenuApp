@@ -19,13 +19,13 @@ public class OrderSample extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_sample);
         ArrayList<OrdersModel> ordersModelArrayList=new ArrayList<>();
-        ordersModelArrayList.add(new OrdersModel(R.id.image,"Pizza","AC-11","425"));
-        ordersModelArrayList.add(new OrdersModel(R.id.image,"Pizza","AC-11","425"));
-        ordersModelArrayList.add(new OrdersModel(R.id.image,"Pizza","AC-11","425"));
+        ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
+        ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
+        ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
         RecyclerView recyclerView=findViewById(R.id.OrderRecyclerView);
-        OrdersSampleAdapter ordersSampleAdapter=new OrdersSampleAdapter(ordersModelArrayList,this);
+        OrdersSampleAdapter adapter=new OrdersSampleAdapter(ordersModelArrayList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(ordersSampleAdapter);
+        recyclerView.setAdapter(adapter);
 
     }
 }
