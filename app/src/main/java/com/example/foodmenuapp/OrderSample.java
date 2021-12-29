@@ -22,6 +22,9 @@ public class OrderSample extends AppCompatActivity {
         ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
         ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
         ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
+        ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
+        ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
+        ordersModelArrayList.add(new OrdersModel(R.drawable.pizza,"Pizza","AC-11","425"));
         RecyclerView recyclerView=findViewById(R.id.OrderRecyclerView);
         OrdersSampleAdapter adapter=new OrdersSampleAdapter(ordersModelArrayList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
