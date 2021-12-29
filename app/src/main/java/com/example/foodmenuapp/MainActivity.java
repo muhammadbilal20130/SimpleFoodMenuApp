@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         //Setting Recycler View adatper
         RecyclerView recyclerView=findViewById(R.id.recylerView);
         MenuAdapter adapter=new MenuAdapter(menuList,this);
-//        recyclerView.setLayoutManager(recyclerView.getLayoutManager());
+//      recyclerView.setLayoutManager(recyclerView.getLayoutManager());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
