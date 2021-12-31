@@ -9,15 +9,15 @@ import androidx.annotation.Nullable;
 
 public class DBhelper extends SQLiteOpenHelper {
     final static String DBname="foodmenuDB.db";
-    final static int DBversion=1;
+    final static int DBversion=2;
     public DBhelper(@Nullable Context context) {
         super(context, DBname, null, DBversion);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("create table orders (id int primary key autoincrement," +
-                "Username text,Userphone text,price text,quantity int,image int,description text,foodName text)");
+        db.execSQL("create table orders (id integer primary key autoincrement," +
+                "Username text,Userphone text,price text,quantity integer,image integer,description text,foodName text)");
     }
 
     @Override
@@ -25,11 +25,12 @@ public class DBhelper extends SQLiteOpenHelper {
         db.execSQL("Drop table if exists orders");
         onCreate(db);
     }
-    public boolean insertOrder(String name,String phoneNumber,int price,int image,String desc,String foodName){
+    public boolean insertOrder(String name,String phoneNumber,int quantity,int price,int image,String desc,String foodName){
         SQLiteDatabase sqLiteDatabase=getReadableDatabase();
         ContentValues values=new ContentValues();
         values.put("Username",name);
         values.put("Userphone",phoneNumber);
+        values.put("quantity",quantity);
         values.put("price",price);
         values.put("image",image);
         values.put("description",desc);
