@@ -1,6 +1,7 @@
 package com.example.foodmenuapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodmenuapp.OrderCartActivity;
 import com.example.foodmenuapp.R;
 import com.example.foodmenuapp.model.MenuModel;
 
@@ -39,6 +41,18 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
         holder.TVfoodName.setText(menuModel.getName());
         holder.TVprice.setText(menuModel.getPrice());
         holder.TVdescription.setText(menuModel.getDesciption());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, OrderCartActivity.class);
+                intent.putExtra("foodImage",menuModel.getImage());
+                intent.putExtra("foodName",menuModel.getName());
+                intent.putExtra("foodPrice",menuModel.getPrice());
+                intent.putExtra("foodDescription",menuModel.getDesciption());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
