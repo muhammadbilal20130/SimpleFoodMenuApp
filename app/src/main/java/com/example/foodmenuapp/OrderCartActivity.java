@@ -36,7 +36,7 @@ public class OrderCartActivity extends AppCompatActivity {
         String name=getIntent().getStringExtra("foodName");
         String description=getIntent().getStringExtra("foodDescription");
 
-       foodImage.setImageResource(image);
+        foodImage.setImageResource(image);
         foodName.setText(name);
         foodDescription.setText(description);
         foodPrice.setText(String.format("%d",price));

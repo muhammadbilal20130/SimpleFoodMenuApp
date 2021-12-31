@@ -16,18 +16,23 @@ public class DBhelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        //add query here
         db.execSQL("create table orders (id integer primary key autoincrement," +
                 "Username text,Userphone text,price text,quantity integer,image integer,description text,foodName text)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //when db is updated add code here
         db.execSQL("Drop table if exists orders");
         onCreate(db);
     }
+    //a function that insert values in database creaated in onCreate function
     public boolean insertOrder(String name,String phoneNumber,int quantity,int price,int image,String desc,String foodName){
+        //create objects for SQLiteDatabase and ContentValues class
         SQLiteDatabase sqLiteDatabase=getReadableDatabase();
         ContentValues values=new ContentValues();
+
         values.put("Username",name);
         values.put("Userphone",phoneNumber);
         values.put("quantity",quantity);
@@ -35,6 +40,9 @@ public class DBhelper extends SQLiteOpenHelper {
         values.put("image",image);
         values.put("description",desc);
         values.put("foodName",foodName);
+
+        //insert function is a bool function it must return a value either 0 or 1 so that
+        // why i used id variable and it also help to check weather data is added or not into database
         long id=sqLiteDatabase.insert("orders",null,values);
         if(id<=0){
             return false;
