@@ -48,7 +48,7 @@ public class OrderCartActivity extends AppCompatActivity {
             public void onClick(View v) {
                 boolean isInserted=dBhelper.insertOrder(orderName.getText().toString(),
                         orderPhoneNumber.getText().toString(),foodQ,price,image,description,name);
-                if(isInserted ==true){
+                if(isInserted){
                     Toast.makeText(getApplicationContext(),"Data inserted",Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(),"Data  not inserted",Toast.LENGTH_SHORT).show();

@@ -10,10 +10,11 @@ import androidx.annotation.Nullable;
 public class DBhelper extends SQLiteOpenHelper {
     final static String DBname="foodmenuDB.db";
     final static int DBversion=2;
+    //make constructor
     public DBhelper(@Nullable Context context) {
         super(context, DBname, null, DBversion);
     }
-
+    //override methods
     @Override
     public void onCreate(SQLiteDatabase db) {
         //add query here
