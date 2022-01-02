@@ -30,6 +30,7 @@
         android:gravity="center">
 
         <ImageView
+            android:id="@+id/addOrderQuantityBtn"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginRight="10dp"
@@ -40,8 +41,9 @@
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="24dp"
-            android:text="2"/>
+            android:text="1"/>
         <ImageView
+            android:id="@+id/decreaseOderQuantityBtn"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/minus"

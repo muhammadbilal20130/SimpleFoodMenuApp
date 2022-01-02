@@ -13,10 +13,11 @@ import android.widget.Toast;
 
 public class OrderCartActivity extends AppCompatActivity {
 
-    ImageView foodImage;
+    ImageView foodImage,plusBtn,minusBtn;
     TextView foodName,foodDescription,foodPrice,foodQuantity;
     Button orderBtn;
     EditText orderName,orderPhoneNumber;
+    int orderNumbers;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +31,9 @@ public class OrderCartActivity extends AppCompatActivity {
         orderPhoneNumber=findViewById(R.id.ETorderPhoneNumber);
         foodQuantity=findViewById(R.id.orderFoodQuantity);
         int foodQ=Integer.parseInt(foodQuantity.getText().toString()); //here food Quantity converted to integer
+        plusBtn=findViewById(R.id.addOrderQuantityBtn);
+        minusBtn=findViewById(R.id.decreaseOderQuantityBtn);
+
 
         int image=getIntent().getIntExtra("foodImage",0);
         int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
@@ -41,7 +45,30 @@ public class OrderCartActivity extends AppCompatActivity {
         foodDescription.setText(description);
         foodPrice.setText(String.format("%d",price));
 
+        //increment and decrement food order quantity by plus and minus button clicks
+        //for incredmenting food quantity
+        plusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderNumbers=Integer.parseInt(foodQuantity.getText().toString());
+                orderNumbers++;
+                String tmp = String.valueOf(orderNumbers);
+                foodQuantity.setText(tmp);
+            }
+        });
+        minusBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                orderNumbers=Integer.parseInt(foodQuantity.getText().toString());
+                if(orderNumbers>0){
+                    orderNumbers--;
+                    String tmp = String.valueOf(orderNumbers);
+                    foodQuantity.setText(tmp);
+                }
+            }
+        });
 
+        //saves data in database
         final DBhelper dBhelper=new DBhelper(this);
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override

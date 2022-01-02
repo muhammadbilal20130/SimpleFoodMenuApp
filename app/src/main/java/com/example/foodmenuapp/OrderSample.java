@@ -21,8 +21,6 @@ public class OrderSample extends AppCompatActivity {
 
         DBhelper dBhelper=new DBhelper(this);
         ArrayList<OrdersModel> ordersModelArrayList=dBhelper.getOrdersFromDB();
-
-
         RecyclerView recyclerView=findViewById(R.id.OrderRecyclerView);
         OrdersSampleAdapter adapter=new OrdersSampleAdapter(ordersModelArrayList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
