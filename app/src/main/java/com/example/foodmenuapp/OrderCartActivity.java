@@ -3,6 +3,7 @@ package com.example.foodmenuapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,6 @@ public class OrderCartActivity extends AppCompatActivity {
         foodQuantity=findViewById(R.id.orderFoodQuantity);
         int foodQ=Integer.parseInt(foodQuantity.getText().toString()); //here food Quantity converted to integer
 
-
         int image=getIntent().getIntExtra("foodImage",0);
         int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
         String name=getIntent().getStringExtra("foodName");
@@ -57,4 +57,5 @@ public class OrderCartActivity extends AppCompatActivity {
         });
 
     }
+
 }

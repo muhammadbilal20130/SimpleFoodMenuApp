@@ -2,10 +2,15 @@ package com.example.foodmenuapp;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.foodmenuapp.model.OrdersModel;
+
+import java.util.ArrayList;
 
 public class DBhelper extends SQLiteOpenHelper {
     final static String DBname="foodmenuDB.db";
@@ -17,9 +22,25 @@ public class DBhelper extends SQLiteOpenHelper {
     //override methods
     @Override
     public void onCreate(SQLiteDatabase db) {
+        /* Here is indexing in database helps in reading data from cursor class
+        id > 0
+        Username > 1
+        Userphone > 2
+        price > 3
+        quantity > 4
+        image > 5
+        description > 6
+        foodName > 7
+        * */
         //add query here
         db.execSQL("create table orders (id integer primary key autoincrement," +
-                "Username text,Userphone text,price text,quantity integer,image integer,description text,foodName text)");
+                "Username text," +
+                "Userphone text," +
+                "price text," +
+                "quantity integer," +
+                "image integer," +
+                "description text," +
+                "foodName text)");
     }
 
     @Override
@@ -50,5 +71,26 @@ public class DBhelper extends SQLiteOpenHelper {
         }else{
             return true;
         }
+    }
+
+    //a function that get all orders from database and shows in order Sample activities by calling function
+    ArrayList<OrdersModel> getOrdersFromDB(){
+
+        ArrayList<OrdersModel> orders=new ArrayList<>();
+        SQLiteDatabase database=this.getReadableDatabase();
+        Cursor cursor=database.rawQuery("Select id,foodName,Price,image from orders",null);
+        if (cursor.moveToFirst()){
+            do{
+                OrdersModel ordersModel=new OrdersModel();
+                ordersModel.setOrderDishID(cursor.getInt(0)+"");
+                ordersModel.setOrderDishName(cursor.getString(1));
+                ordersModel.setOrderDishPrice(cursor.getInt(2)+"");
+                ordersModel.setImage(cursor.getInt(3));
+                orders.add(ordersModel);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        database.close();
+        return orders;
     }
 }

@@ -4,6 +4,9 @@ public class OrdersModel {
     int Image;
     String orderDishName,orderDishID,orderDishPrice;
 
+    public OrdersModel() {
+    }
+
     public OrdersModel(int image, String orderDishName, String orderDishID, String orderDishPrice) {
         Image = image;
         this.orderDishName = orderDishName;
