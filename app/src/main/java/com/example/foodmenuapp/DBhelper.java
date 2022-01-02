@@ -93,4 +93,34 @@ public class DBhelper extends SQLiteOpenHelper {
         database.close();
         return orders;
     }
+    public Cursor getOrderByID(int id){
+        SQLiteDatabase database=this.getReadableDatabase();
+        Cursor cursor=database.rawQuery("Select * from orders where id ="+id,null);
+        if(cursor !=null){
+            cursor.moveToFirst();
+        }
+        return cursor;
+    }
+    //Update order
+    public boolean updareOrder(String name,String phoneNumber,int quantity,int price,int image,String desc,String foodName,int userID){
+        //create objects for SQLiteDatabase and ContentValues class
+        SQLiteDatabase sqLiteDatabase=getReadableDatabase();
+        ContentValues values=new ContentValues();
+
+        values.put("Username",name);
+        values.put("Userphone",phoneNumber);
+        values.put("quantity",quantity);
+        values.put("price",price);
+        values.put("image",image);
+        values.put("description",desc);
+        values.put("foodName",foodName);
+
+
+        long id=sqLiteDatabase.update("orders",values,"id="+userID,null);
+        if(id<=0){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

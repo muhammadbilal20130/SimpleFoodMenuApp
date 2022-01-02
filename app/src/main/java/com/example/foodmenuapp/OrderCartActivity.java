@@ -2,6 +2,7 @@ package com.example.foodmenuapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -33,17 +34,7 @@ public class OrderCartActivity extends AppCompatActivity {
         int foodQ=Integer.parseInt(foodQuantity.getText().toString()); //here food Quantity converted to integer
         plusBtn=findViewById(R.id.addOrderQuantityBtn);
         minusBtn=findViewById(R.id.decreaseOderQuantityBtn);
-
-
-        int image=getIntent().getIntExtra("foodImage",0);
-        int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
-        String name=getIntent().getStringExtra("foodName");
-        String description=getIntent().getStringExtra("foodDescription");
-
-        foodImage.setImageResource(image);
-        foodName.setText(name);
-        foodDescription.setText(description);
-        foodPrice.setText(String.format("%d",price));
+        final DBhelper dBhelper=new DBhelper(this);
 
         //increment and decrement food order quantity by plus and minus button clicks
         //for incredmenting food quantity
@@ -67,9 +58,19 @@ public class OrderCartActivity extends AppCompatActivity {
                 }
             }
         });
+        //saves new order in database
+        if(getIntent().getIntExtra("updated",0)==1){
+        int image=getIntent().getIntExtra("foodImage",0);
+        int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
+        String name=getIntent().getStringExtra("foodName");
+        String description=getIntent().getStringExtra("foodDescription");
 
+        foodImage.setImageResource(image);
+        foodName.setText(name);
+        foodDescription.setText(description);
+        foodPrice.setText(String.format("%d",price));
         //saves data in database
-        final DBhelper dBhelper=new DBhelper(this);
+
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,7 +83,42 @@ public class OrderCartActivity extends AppCompatActivity {
                 }
             }
         });
+//updates in database
+    }else{
+        int id=getIntent().getIntExtra("id",0);
+        Cursor cursor=dBhelper.getOrderByID(id);
+            Toast.makeText(this, "Qty"+cursor.getInt(4), Toast.LENGTH_LONG).show();
+            final int image=cursor.getInt(5);
+            foodImage.setImageResource(image);
+            foodName.setText(cursor.getString(7));
+            foodDescription.setText(cursor.getString(6));
+            foodPrice.setText(String.format("%d",cursor.getInt(3)));
+            foodQuantity.setText(String.valueOf(cursor.getInt(4)));
+            orderName.setText(cursor.getString(1));
+            orderPhoneNumber.setText(cursor.getString(2));
 
+            orderBtn.setText("Update Order");
+            orderBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Boolean isUpdated=dBhelper.updareOrder(
+                            orderName.getText().toString(),
+                            orderPhoneNumber.getText().toString(),
+                            Integer.parseInt(foodQuantity.getText().toString()),
+                            Integer.parseInt(foodPrice.getText().toString()),
+                            image,
+                            foodDescription.getText().toString(),
+                            foodName.getText().toString(),
+                            id);
+                    if(isUpdated){
+                        Toast.makeText(getApplicationContext(),"Order Updated",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Order not Updated",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
+        }
     }
 
 }
