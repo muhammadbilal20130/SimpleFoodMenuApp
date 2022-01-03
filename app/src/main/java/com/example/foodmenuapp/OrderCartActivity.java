@@ -48,9 +48,9 @@ public class OrderCartActivity extends AppCompatActivity {
 
                 orderNumbers++;
                 Log.v("ON in event",String.valueOf(orderNumbers));
-//                int temp=calculatePrice(orderNumbers);
+                int temp=calculatePrice(orderNumbers);
 //                Log.v("temp value ",String.valueOf(temp));
-                foodPrice.setText(String.valueOf(1000));
+                foodPrice.setText(String.valueOf(temp));
                 foodQuantity.setText(String.valueOf(orderNumbers));
             }
         });
