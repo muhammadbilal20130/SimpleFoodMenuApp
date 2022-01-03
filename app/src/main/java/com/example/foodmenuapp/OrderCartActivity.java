@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class OrderCartActivity extends AppCompatActivity {
+
+    //From this activity user can place order and update order comming from Order Sample Activity
 
     ImageView foodImage,plusBtn,minusBtn;
     TextView foodName,foodDescription,foodPrice,foodQuantity;
@@ -35,47 +38,54 @@ public class OrderCartActivity extends AppCompatActivity {
         plusBtn=findViewById(R.id.addOrderQuantityBtn);
         minusBtn=findViewById(R.id.decreaseOderQuantityBtn);
         final DBhelper dBhelper=new DBhelper(this);
+        orderNumbers=Integer.parseInt(foodQuantity.getText().toString());
 
         //increment and decrement food order quantity by plus and minus button clicks
         //for incredmenting food quantity
         plusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                orderNumbers=Integer.parseInt(foodQuantity.getText().toString());
+
                 orderNumbers++;
-                String tmp = String.valueOf(orderNumbers);
-                foodQuantity.setText(tmp);
+                Log.v("ON in event",String.valueOf(orderNumbers));
+//                int temp=calculatePrice(orderNumbers);
+//                Log.v("temp value ",String.valueOf(temp));
+                foodPrice.setText(String.valueOf(1000));
+                foodQuantity.setText(String.valueOf(orderNumbers));
             }
         });
         minusBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                orderNumbers=Integer.parseInt(foodQuantity.getText().toString());
+
                 if(orderNumbers>0){
                     orderNumbers--;
-                    String tmp = String.valueOf(orderNumbers);
+                    String tmp =String.valueOf(orderNumbers);
+                    foodPrice.setText(String.valueOf(calculatePrice(orderNumbers)));
                     foodQuantity.setText(tmp);
                 }
             }
         });
         //saves new order in database
-        if(getIntent().getIntExtra("updated",0)==1){
-        int image=getIntent().getIntExtra("foodImage",0);
-        int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
-        String name=getIntent().getStringExtra("foodName");
-        String description=getIntent().getStringExtra("foodDescription");
+        if(getIntent().getIntExtra("updated",1)==1){
 
-        foodImage.setImageResource(image);
-        foodName.setText(name);
-        foodDescription.setText(description);
-        foodPrice.setText(String.format("%d",price));
         //saves data in database
 
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int image=getIntent().getIntExtra("foodImage",0);
+//              int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
+                int price=calculatePrice(orderNumbers);
+                String name=getIntent().getStringExtra("foodName");
+                String description=getIntent().getStringExtra("foodDescription");
+                int quantity=Integer.parseInt(foodQuantity.getText().toString());
+                foodImage.setImageResource(image);
+                foodName.setText(name);
+                foodDescription.setText(description);
+                foodPrice.setText(String.format("%d",price));
                 boolean isInserted=dBhelper.insertOrder(orderName.getText().toString(),
-                        orderPhoneNumber.getText().toString(),foodQ,price,image,description,name);
+                        orderPhoneNumber.getText().toString(),quantity,price,image,description,name);
                 if(isInserted){
                     Toast.makeText(getApplicationContext(),"Data inserted",Toast.LENGTH_SHORT).show();
                 }else{
@@ -87,15 +97,19 @@ public class OrderCartActivity extends AppCompatActivity {
     }else{
         int id=getIntent().getIntExtra("id",0);
         Cursor cursor=dBhelper.getOrderByID(id);
-            Toast.makeText(this, "Qty"+cursor.getInt(4), Toast.LENGTH_LONG).show();
-            final int image=cursor.getInt(5);
+            final int image=cursor.getInt(5);//5
             foodImage.setImageResource(image);
-            foodName.setText(cursor.getString(7));
-            foodDescription.setText(cursor.getString(6));
-            foodPrice.setText(String.format("%d",cursor.getInt(3)));
-            foodQuantity.setText(String.valueOf(cursor.getInt(4)));
-            orderName.setText(cursor.getString(1));
-            orderPhoneNumber.setText(cursor.getString(2));
+            foodName.setText(cursor.getString(7));//7
+            foodDescription.setText(cursor.getString(6));//6
+            foodPrice.setText(String.format("%d",cursor.getInt(3)));//3
+            foodQuantity.setText(String.valueOf(cursor.getInt(4)));//4
+            orderNumbers=cursor.getInt(4);
+            Log.v("This Price",String.valueOf(cursor.getInt(4)));
+            Log.v("ordernumber = ",String.valueOf(orderNumbers));
+            Log.v("This quantity",String.format("%d",cursor.getInt(3)));
+
+            orderName.setText(cursor.getString(1));//1
+            orderPhoneNumber.setText(cursor.getString(2));//2
 
             orderBtn.setText("Update Order");
             orderBtn.setOnClickListener(new View.OnClickListener() {
@@ -120,5 +134,11 @@ public class OrderCartActivity extends AppCompatActivity {
 
         }
     }
+
+    public int calculatePrice(int quantity){
+        int setPrice=Integer.parseInt(getIntent().getStringExtra("foodPrice"))*quantity;
+        return setPrice;
+    }
+
 
 }

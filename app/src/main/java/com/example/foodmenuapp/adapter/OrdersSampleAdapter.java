@@ -1,16 +1,20 @@
 package com.example.foodmenuapp.adapter;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.foodmenuapp.DBhelper;
 import com.example.foodmenuapp.OrderCartActivity;
 import com.example.foodmenuapp.R;
 import com.example.foodmenuapp.model.OrdersModel;
@@ -51,6 +55,33 @@ public class OrdersSampleAdapter extends RecyclerView.Adapter<OrdersSampleAdapte
                 context.startActivity(i);
             }
         });
+        //onlong press function will delete order
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                new AlertDialog.Builder(context).
+                        setTitle("Delete order").
+                        setMessage("Do you want to delete order? ").
+                        setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                DBhelper dBhelper=new DBhelper(context);
+                                if(dBhelper.deleteOrder(ordersModel.getOrderDishID())>0){
+                                    Toast.makeText(context,"Order deleted",Toast.LENGTH_SHORT).show();
+                                }else{
+                                    Toast.makeText(context,"Error",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(context,"Cancelled",Toast.LENGTH_SHORT).show();
+                    }
+                }).show();
+                return false;
+            }
+        });
+
     }
 
     @Override

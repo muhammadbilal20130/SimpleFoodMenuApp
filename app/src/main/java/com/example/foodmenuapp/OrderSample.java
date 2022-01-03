@@ -13,6 +13,7 @@ import com.example.foodmenuapp.model.OrdersModel;
 import java.util.ArrayList;
 
 public class OrderSample extends AppCompatActivity {
+//    This activity shows orders that are placed by user and it shows orders from database
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

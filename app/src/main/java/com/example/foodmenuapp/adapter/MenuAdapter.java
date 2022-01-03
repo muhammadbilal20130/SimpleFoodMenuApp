@@ -53,7 +53,10 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
                 context.startActivity(intent);
             }
         });
+
+
     }
+
 
     @Override
     public int getItemCount() {
@@ -73,4 +76,5 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
             TVdescription=itemView.findViewById(R.id.TVdescription);
         }
     }
+
 }
