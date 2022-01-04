@@ -21,7 +21,7 @@ public class OrderCartActivity extends AppCompatActivity {
     TextView foodName,foodDescription,foodPrice,foodQuantity;
     Button orderBtn;
     EditText orderName,orderPhoneNumber;
-    int orderNumbers;
+    int orderNumbers,orignalPrice;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +47,7 @@ public class OrderCartActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 orderNumbers++;
-                Log.v("ON in event",String.valueOf(orderNumbers));
-                int temp=calculatePrice(orderNumbers);
-//                Log.v("temp value ",String.valueOf(temp));
-                foodPrice.setText(String.valueOf(temp));
+                foodPrice.setText(String.valueOf(calculatePrice(orderNumbers)));
                 foodQuantity.setText(String.valueOf(orderNumbers));
             }
         });
@@ -58,11 +55,10 @@ public class OrderCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if(orderNumbers>0){
+                if(orderNumbers>=1){
                     orderNumbers--;
-                    String tmp =String.valueOf(orderNumbers);
                     foodPrice.setText(String.valueOf(calculatePrice(orderNumbers)));
-                    foodQuantity.setText(tmp);
+                    foodQuantity.setText(String.valueOf(orderNumbers));
                 }
             }
         });
@@ -75,7 +71,7 @@ public class OrderCartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 int image=getIntent().getIntExtra("foodImage",0);
-//              int price=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
+                orignalPrice=Integer.parseInt(getIntent().getStringExtra("foodPrice"));
                 int price=calculatePrice(orderNumbers);
                 String name=getIntent().getStringExtra("foodName");
                 String description=getIntent().getStringExtra("foodDescription");
@@ -104,9 +100,11 @@ public class OrderCartActivity extends AppCompatActivity {
             foodPrice.setText(String.format("%d",cursor.getInt(3)));//3
             foodQuantity.setText(String.valueOf(cursor.getInt(4)));//4
             orderNumbers=cursor.getInt(4);
-            Log.v("This Price",String.valueOf(cursor.getInt(4)));
+            //seting orignal price in variable for increments and decrements of prices
+            orignalPrice=cursor.getInt(3);
+            Log.v("This qty =",String.valueOf(cursor.getInt(4)));
             Log.v("ordernumber = ",String.valueOf(orderNumbers));
-            Log.v("This quantity",String.format("%d",cursor.getInt(3)));
+            Log.v("This price",String.format("%d",cursor.getInt(3)));
 
             orderName.setText(cursor.getString(1));//1
             orderPhoneNumber.setText(cursor.getString(2));//2
@@ -136,7 +134,8 @@ public class OrderCartActivity extends AppCompatActivity {
     }
 
     public int calculatePrice(int quantity){
-        int setPrice=Integer.parseInt(getIntent().getStringExtra("foodPrice"))*quantity;
+//        int setPrice=Integer.parseInt(foodPrice.getText().toString())*quantity;
+        int setPrice=orignalPrice*quantity;
         return setPrice;
     }
 
